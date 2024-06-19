@@ -53,6 +53,14 @@ router.get('/health', (req, res) => {
   res.json({ day, date, time,app });
 });
 
+// Ensure the /tmp directory exists
+const ensureTmpDirectoryExists = () => {
+  const tmpDir = '/tmp';
+  if (!fs.existsSync(tmpDir)) {
+      fs.mkdirSync(tmpDir);
+  }
+};
+
 // create uploadToS3(imageBuffer)
 async function uploadToS3(imageBuffer,filename) {
     const key = "uploads/" + Date.now().toString() + filename.replace(" ", "-");
@@ -88,7 +96,8 @@ async function uploadToS3(imageBuffer,filename) {
     }
 }
 async function downloadPDFFromS3(bucketName, key, localFilePath) {
-  
+  console.log('inside download');
+  console.log('-----s3---',bucketName, key, localFilePath);
     const downloadParams = {
       Bucket: bucketName,
       Key: key,
@@ -97,6 +106,9 @@ async function downloadPDFFromS3(bucketName, key, localFilePath) {
     try {
       const { Body } = await s3.getObject(downloadParams).promise();
   
+       // Ensure the /tmp directory exists
+       ensureTmpDirectoryExists();
+
       // Save the PDF file locally
       fs.writeFileSync(localFilePath, Body);
       console.log(`PDF downloaded and saved locally at ${localFilePath}`);
