@@ -58,6 +58,9 @@ const ensureTmpDirectoryExists = () => {
   const tmpDir = '/tmp';
   if (!fs.existsSync(tmpDir)) {
       fs.mkdirSync(tmpDir);
+      console.log('Temporary directory created:', tmpDir);
+  } else {
+      console.log('Temporary directory already exists:', tmpDir);
   }
 };
 
