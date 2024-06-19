@@ -11,12 +11,7 @@ import {schemaValidation,validateSession } from '../utils/middlewares.js';
 
 
 const corsOptions = {
-  origin: process.env.CORS_DOMAIN,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: 'Content-Type, Authorization',
-  credentials: true,
-  optionsSuccessStatus: 200, // For legacy browser support
-  preflightContinue: true, // Pass the CORS preflight response to the next handler
+    origin: `${process.env.CORS_DOMAIN}`
 };
 
 const ROUTES = (server) => {
