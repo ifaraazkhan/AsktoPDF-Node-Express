@@ -69,11 +69,11 @@ async function uploadToS3(imageBuffer,filename) {
 
       console.log("filename from ---->", filename);
     const fileFullname   = filename;
-    const systempath = `temp/${filename}`;
+    const systempath = `tmp/${filename}`;
     const s3url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${key}`;
     
        // Call the download function after successful upload
-    await downloadPDFFromS3(process.env.AWS_S3_BUCKET_NAME, key, `temp/${filename}`);
+    await downloadPDFFromS3(process.env.AWS_S3_BUCKET_NAME, key, `tmp/${filename}`);
 
      // Return the file path as a string
     const file = {
@@ -88,6 +88,7 @@ async function uploadToS3(imageBuffer,filename) {
     }
 }
 async function downloadPDFFromS3(bucketName, key, localFilePath) {
+  
     const downloadParams = {
       Bucket: bucketName,
       Key: key,
